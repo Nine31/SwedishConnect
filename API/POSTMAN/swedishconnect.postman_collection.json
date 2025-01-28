@@ -1,0 +1,2096 @@
+{
+    "info": {
+        "_postman_id": "fdf5f5b3-2cae-818f-45b4-77d225af30e9",
+		"name": "Swedish Connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3b317226-ba8d-4b36-7470-31387525aa9d"
+    },
+    "item": [
+        {
+            "name": "Module 2",
+			"item": [
+				{
+					"name": "Get Weather Forecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/weatherforecast",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"weatherforecast"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijest by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/vijesti/zanimljiva-mjesta-za-posjetit-u-svedskoj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti",
+								"zanimljiva-mjesta-za-posjetit-u-svedskoj"
+							]
+						}
+					},
+					"response": []
+				}		
+			]
+        },
+        {
+			"name": "Module 4",
+			"item": [
+				{
+					"name": "Get Vijesti",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijest by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/vijesti/kako-doci-do-posla-u-svedskoj",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti",
+								"kako-doci-do-posla-u-svedskoj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+                    "name": "Create Vijest",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"id\": \"{{$guid}}\",\n    \"title\": \"Test Create Vijest\",\n    \"content\": \"This is the content of the test vijest.\",\n    \"summary\": \"Short summary of the vijest.\",\n    \"slug\": \"test-create-vijest\",\n    \"author\": \"Author Name\",\n    \"pictureUrl\": \"http://example.com/image.jpg\",\n    \"category\": \"General\",\n    \"publishedDate\": \"{{vijestDate}}\",\n    \"views\": 0,\n    \"isFeatured\": false,\n    \"tags\": [\"test\", \"example\", \"vijest\"]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/api/vijesti",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "vijesti"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+				{
+                    "name": "Edit Vijest",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Updated Test Vijest\",\n    \"content\": \"This is the updated content of the vijest.\",\n    \"summary\": \"Updated short summary of the vijest.\",\n    \"pictureUrl\": \"http://example.com/image_updated.jpg\",\n    \"author\": \"Updated Author Name\",\n    \"category\": \"Updated Category\",\n    \"publishedDate\": \"{{vijestDate}}\",\n    \"isFeatured\": false,\n    \"tags\": [\"updated\", \"vijest\", \"example\"],\n    \"reactions\": {\n        \"like\": 10,\n        \"love\": 5,\n        \"support\": 2,\n        \"wow\": 3,\n        \"sad\": 0,\n        \"angry\": 1,\n        \"laugh-cry\": 4\n    }\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/api/vijesti/test-create-vijest",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "vijesti",
+                                "test-create-vijest"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+				{
+                    "name": "Delete Vijest",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "name": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{url}}/api/vijesti/test-create-vijest",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "vijesti",
+                                "test-create-vijest"
+                            ]
+                        }
+                    },
+                    "response": []
+                }                
+			]
+		},
+		{
+			"name": "Module 12",
+			"item": [
+				{
+					"name": "Login user successful",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user validation error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user bad password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"badpassword\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user bad email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"fake@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti no auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijest no auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/vijesti/test-vijest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti",
+								"test-vijest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijest with auth",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYm9iIiwibmFtZWlkIjoiOTViMjVmZjktMWI3YS00NjkxLThmYTMtMmE2NTU4ZDFjMTBjIiwiZW1haWwiOiJib2JAdGVzdC5jb20iLCJuYmYiOjE2NDI0NzkxNDIsImV4cCI6MTY0MzA4Mzk0MiwiaWF0IjoxNjQyNDc5MTQyfQ.7MiEeHV-zz8ySTwvU47jEhvZvf0x4c46wntYy47-XITtUcmv6wVriy0UebZlBq50mzgywo4mKS7ih7fkrsrUZw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti/test-vijest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti",
+								"test-vijest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user successful",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"adnan@swedishconnect.com\",\n\t\"username\": \"adnan\",\n\t\"displayName\": \"Adnan\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user validation error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"sally@swedishconnect.com\",\n\t\"username\": \"sally\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user duplicate email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"username\": \"fakeuser\",\n\t\"displayName\": \"User\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user duplicate username",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"fakeuser@swedishconnect.com\",\n\t\"username\": \"fakeuser\",\n\t\"displayName\": \"FakeUser\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user weak password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"letmein@swedishconnect.com\",\n\t\"username\": \"LetMeIn\",\n\t\"displayName\": \"Let Me In\",\n\t\"password\": \"letmein\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6ImY3YmMxZWY3LThhNGMtNDU0NS1hZDI1LTgzMWVlYTJjOGQyYyIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNjA1MTU1ODc5LCJleHAiOjE2MDU3NjA2NzksImlhdCI6MTYwNTE1NTg3OX0.gbmrzEIllx2ds2vPj5N5-zwyYsil_ttF2PsxleFvHQ5FIwOfxJuWQolojBvAgaIJEsV9kJClQJBq7gyY32LSdQ"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 14",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Adnan and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('tom_token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('tom_token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"adnan@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijest Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is created\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti/test-vijest",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"hutbe",
+								"test-vijest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 16",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "File",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/photos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/account",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Photo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/photos/houh9nt3vhxesvc0bsn7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"photos",
+								"houh9nt3vhxesvc0bsn7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Main Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{url}}/api/photos/kcdyuovk08n68z4crpyn/setmain",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"photos",
+								"kcdyuovk08n68z4crpyn",
+								"setmain"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profiles/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile Adnan",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profiles/adnan",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"adnan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Photo Adnan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{tom_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "File",
+									"type": "file",
+									"src": "/Users/alved/OneDrive/Skrivbord/Slike/user1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/photos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 18",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Bio",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"displayName\": \"User\",\n\t\"bio\": \"Hello from User!\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/profiles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profiles/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 20",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as adnan and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('tom_token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('tom_token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"adnan@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profiles/user",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Adnan's Profile as User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profiles/adnan",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"adnan"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Module 21",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti no queryString",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});",
+									"",
+									"pm.test(\"has pagination header\", function() {",
+									"    pm.response.to.have.header(\"pagination\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti pageSize 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});",
+									"",
+									"pm.test(\"has pagination header\", function() {",
+									"    pm.response.to.have.header(\"pagination\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti?pageSize=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti pageSize 2 pageNumber 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});",
+									"",
+									"pm.test(\"has pagination header\", function() {",
+									"    pm.response.to.have.header(\"pagination\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti?pageSize=2&pageNumber=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "2"
+								},
+								{
+									"key": "pageNumber",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IdentityCB",
+			"item": [
+				{
+					"name": "Login as user and save token to env",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"    pm.globals.set('refreshToken', user.refreshToken);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    var refreshToken = pm.globals.get('refreshToken');",
+									"    pm.expect(token).to.eql(user.token);",
+									"    pm.expect(refreshToken).to.eql(user.refreshToken);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@swedishconnect.com\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vijesti",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"",
+									"// response to be 200",
+									"pm.test(\"response is 200\", function() {",
+									"    pm.response.to.have.status(200)",
+									"});",
+									"",
+									"pm.test(\"has all properties\", function() {",
+									"    pm.expect(data[0]).to.have.property('id');",
+									"    pm.expect(data[0]).to.have.property('title');",
+									"    pm.expect(data[0]).to.have.property('content');",
+									"    pm.expect(data[0]).to.have.property('summary');",
+									"    pm.expect(data[0]).to.have.property('slug');",
+									"    pm.expect(data[0]).to.have.property('pictureUrl');",
+									"    pm.expect(data[0]).to.have.property('author');",
+									"    pm.expect(data[0]).to.have.property('category');",
+									"    pm.expect(data[0]).to.have.property('publishedDate');",
+									"    pm.expect(data[0]).to.have.property('views');",
+									"    pm.expect(data[0]).to.have.property('isFeatured');",
+									"    pm.expect(data[0]).to.have.property('tags');",
+									"    pm.expect(data[0]).to.have.property('reactions');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vijesti",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vijesti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token for user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();",
+									"",
+									"pm.test(\"Has properties\", function () {",
+									"    pm.expect(user).to.have.property('displayName');",
+									"    pm.expect(user).to.have.property('username');",
+									"    pm.expect(user).to.have.property('image');",
+									"    pm.expect(user).to.have.property('token');",
+									"});",
+									"",
+									"if (pm.test(\"Has properties\")) {",
+									"    pm.globals.set('token', user.token);",
+									"}",
+									"",
+									"pm.test(\"Global token has been set\", function() {",
+									"    var token = pm.globals.get('token');",
+									"    pm.expect(token).to.eql(user.token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/refreshToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Regsiter new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"displayName\": \"test1\",\n\t\"username\": \"test1\",\n\t\"email\": \"zmgbqqswudsmtraqby@mhzayt.online\",\n\t\"password\": \"Pa$$w0rd\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User Email address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"Q2ZESjhGeHN3VDhjdytWRXNLM0NqaTBpS0FhZEZGUitqN3JpazNDRVduZ3dpSU5PcW1ZMzBxUDRzMW44ek5MRTFuRnJ0RUk3L3oyY01SR2dyTmlXcVd4UHFMRGc4aTd1clB2OHNXZmp4a0w0TXVtdmRNd2ZTVjgvZnVDbHNCRG5jY3FEQUNLM3FBdHo4VlRZek9lU0dBMXduRVZJRlRvYjZTSXdRdXhtT1gwMlp4NjE3L3hwMkhyaGltNlJCZlFTeUNpMzQwRW85bjlFclg1VmNFZjJDSmhnZStjRkxQUmd1ZkVIdG4vRlFhY0EwV1ZzaVlkelBOc0pNV2lMYnVXRUhnUlFvQT09\",\n\t\"email\": \"nru02096@eoopy.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/account/verifyEmail?token=Q2ZESjhCWlZMME41c3pwS2syZDdOVXdNVzQ1eUpsTkZOR0kxalVlK2ZqeXVXYWpoRHhFZkZKY0o0M2M5Qy9ZUzBWNWtONHpHcDlmWVdNa0dodTRscjZYaXh6TjRDbENCWEpac1RaakQvOURoL3piUkRwRDI3QmNNTFpIc3VEMnlJcFMxUjFxaXczRWxRZHhDVDEzWDlBWGVmcXNtWnRUMnZhWDdJMTgwWVBhbURhR2I3d0ZMYlNhRXJkTmZqYUFTZkkyTTlyMG9GWVhseFRkaGlsVjRvTUNKV1JNc0FJK0JXeFR5N3pNbHBhY3ArMHVtWjhXZUVGNllJVFJVV0gzcmx5YklOdz09&email=btw83500@cuoly.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"verifyEmail"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "Q2ZESjhCWlZMME41c3pwS2syZDdOVXdNVzQ1eUpsTkZOR0kxalVlK2ZqeXVXYWpoRHhFZkZKY0o0M2M5Qy9ZUzBWNWtONHpHcDlmWVdNa0dodTRscjZYaXh6TjRDbENCWEpac1RaakQvOURoL3piUkRwRDI3QmNNTFpIc3VEMnlJcFMxUjFxaXczRWxRZHhDVDEzWDlBWGVmcXNtWnRUMnZhWDdJMTgwWVBhbURhR2I3d0ZMYlNhRXJkTmZqYUFTZkkyTTlyMG9GWVhseFRkaGlsVjRvTUNKV1JNc0FJK0JXeFR5N3pNbHBhY3ArMHVtWjhXZUVGNllJVFJVV0gzcmx5YklOdz09"
+								},
+								{
+									"key": "email",
+									"value": "btw83500@cuoly.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend verification email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/account/resendEmailConfirmationLink?email=btw83500@cuoly.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"resendEmailConfirmationLink"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "btw83500@cuoly.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/user/forgotPassword?email=nru02096@eoopy.com",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"forgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "nru02096@eoopy.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"Q2ZESjhGeHN3VDhjdytWRXNLM0NqaTBpS0FhZ09UNThIUW9DZDY0RVE5bFlBWWR2MExZb3FCb2pyNUlFSDhhRFlFU1NsMTQraWkrUFNSOFV3Vmt2VEsyYnBIdnNPcVppZ1ZEZlEyTzUxMSs5MHhDUmJDYjh5ZTdodlZSTnZNbUpTelREOFY4UHRucnZKZE1RaHJ2dFo1RVdEeTJia1gxNllnWjNVMUZYbWNpVlpMZE15Zk1mWkJ3Q3AxQU15emptOHRCQlJZMFhYK2JIcTBIVTFTM2FuRzFVYzRlMHFla05NQitvSDcwYXBhSFE0UjVV\",\n\t\"email\": \"nru02096@eoopy.com\",\n\t\"password\": \"Pa$$w0rd1\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/user/resetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"resetPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "Q2ZESjhGeHN3VDhjdytWRXNLM0NqaTBpS0FhZEZGUitqN3JpazNDRVduZ3dpSU5PcW1ZMzBxUDRzMW44ek5MRTFuRnJ0RUk3L3oyY01SR2dyTmlXcVd4UHFMRGc4aTd1clB2OHNXZmp4a0w0TXVtdmRNd2ZTVjgvZnVDbHNCRG5jY3FEQUNLM3FBdHo4VlRZek9lU0dBMXduRVZJRlRvYjZTSXdRdXhtT1gwMlp4NjE3L3hwMkhyaGltNlJCZlFTeUNpMzQwRW85bjlFclg1VmNFZjJDSmhnZStjRkxQUmd1ZkVIdG4vRlFhY0EwV1ZzaVlkelBOc0pNV2lMYnVXRUhnUlFvQT09",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "nru02096@eoopy.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users - admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/admin/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000"
+		}
+	]
+}
