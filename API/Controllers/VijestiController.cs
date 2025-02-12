@@ -44,5 +44,14 @@ namespace API.Controllers
 
             return Ok();
         }
+
+        public static string GenerateSlug(string title)
+        {
+            return title.ToLower()
+                        .Replace(" ", "-")
+                        .Replace("č", "c").Replace("ć", "c")
+                        .Replace("š", "s").Replace("ž", "z")
+                        .Replace("đ", "dj"); 
+        }
     }
 }

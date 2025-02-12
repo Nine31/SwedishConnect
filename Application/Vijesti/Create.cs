@@ -20,9 +20,25 @@ namespace Application.Vijesti
             }
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
+                // Automatski generiši slug ako nije postavljen
+                if (string.IsNullOrWhiteSpace(request.Vijest.Slug))
+                {
+                    request.Vijest.Slug = GenerateSlug(request.Vijest.Title);
+                }
                 _context.Vijests.Add(request.Vijest);
 
                 await _context.SaveChangesAsync();
+            }
+
+            private string GenerateSlug(string title)
+            {
+                return title.ToLower()
+                            .Replace(" ", "-")
+                            .Replace("č", "c")
+                            .Replace("ć", "c")
+                            .Replace("š", "s")
+                            .Replace("đ", "dj")
+                            .Replace("ž", "z");
             }
         }
     }
