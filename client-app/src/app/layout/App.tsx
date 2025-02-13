@@ -1,23 +1,28 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios';
 import { Container } from 'semantic-ui-react';
 import { Vijest } from '../models/vijest';
 import NavBar from './NavBar';
 import VijestDashboard from '../../features/vijesti/dashboard/VijestDashboard';
+import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 function App() {
   const [vijesti, setVijesti] = useState<Vijest[]>([]);
   const [selectedVijest, setselectedVijest] = useState<Vijest | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    axios.get<Vijest[]>('http://localhost:5000/api/vijesti')
-      .then(response => {
-        setVijesti(response.data);
+    agent.Vijesti.list().then(response => {
+      let vijesti: Vijest[] = [];
+      response.forEach(vijest => {
+        vijest.publishedDate = vijest.publishedDate.split('T')[0];
+        vijesti.push(vijest);
       })
-      .catch(error => {
-        console.error('There was an error fetching the data', error);
-      });
+      setVijesti(vijesti);
+      setLoading(false);
+    })
   }, []);
 
   function handleSelectVijest(slug: string) {
@@ -38,32 +43,45 @@ function App() {
   }
 
   async function handleCreateOrEditVijest(vijest: Vijest) {
+    setSubmitting(true);
+  
     if (vijest.slug) {
+      agent.Vijesti.update(vijest).then(() => {
         setVijesti([...vijesti.filter(v => v.slug !== vijest.slug), vijest]);
+        setselectedVijest(vijest);
+        setEditMode(false);
+        setSubmitting(false);
+      });
     } else {
         try {
-            const response = await axios.post<Vijest>('http://localhost:5000/api/vijesti', vijest);
-            setVijesti([...vijesti, response.data]); // Backend generiše slug, frontend ga koristi
+          const { id, ...vijestWithoutId } = vijest;
+    
+          const response = await agent.Vijesti.create(vijestWithoutId);
+    
+          if (response.data) {
+            const newVijest: Vijest = response.data;
+    
+            setVijesti([...vijesti, newVijest]);
+            setselectedVijest(newVijest);
+          }
+    
         } catch (error) {
-            console.error("Greška prilikom kreiranja vijesti:", error);
+          console.error("Greška pri kreiranju vijesti:", error);
         }
+        setEditMode(false);
+        setSubmitting(false);
     }
-    setEditMode(false);
-    setselectedVijest(vijest);
   }
 
   function handleDeleteVijest(slug: string) {
-    setVijesti([...vijesti.filter(v => v.slug !== slug)])
+    setSubmitting(true);
+    agent.Vijesti.delete(slug).then(() => {
+      setVijesti([...vijesti.filter(v => v.slug !== slug)]);
+      setSubmitting(false);
+    })
   }
 
-
-  // function handleCreateOrEditVijest(vijest: Vijest) {
-  //   vijest.slug
-  //     ? setVijesti([...vijesti.filter(v => v.slug !== vijest.slug), vijest])
-  //     : setVijesti([...vijesti, vijest]);
-  //   setEditMode(false);
-  //   setselectedVijest(vijest);
-  // }
+  if (loading) return <LoadingComponent content='Učitavanje vijesti...' />
 
   return (
     <>
@@ -79,6 +97,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditVijest}
           deleteVijest={handleDeleteVijest}
+          submitting={submitting}
         />
       </Container>
     </>

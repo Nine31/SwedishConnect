@@ -14,10 +14,11 @@ interface Props {
     closeForm: () => void;
     createOrEdit: (vijest: Vijest) => void;
     deleteVijest: (slug: string) => void;
+    submitting: boolean;
 }
 
 export default function VijestDashboard({vijesti, selectedVijest, selectVijest, cancelSelectVijest, editMode, 
-    openForm, closeForm, createOrEdit, deleteVijest}: Props) {
+    openForm, closeForm, createOrEdit, deleteVijest, submitting}: Props) {
 
     // Grupiranje vijesti po kategorijama
     const groupedVijesti = vijesti.reduce((acc, vijest) => {
@@ -38,6 +39,7 @@ export default function VijestDashboard({vijesti, selectedVijest, selectVijest, 
                             vijesti={vijesti} 
                             selectVijest={selectVijest}
                             deleteVijest={deleteVijest}
+                            submitting={submitting}
                         />
                     </div>
                 ))}
@@ -54,6 +56,7 @@ export default function VijestDashboard({vijesti, selectedVijest, selectVijest, 
                     closeForm={closeForm}
                     vijest={selectedVijest}
                     createOrEdit={createOrEdit}
+                    submitting={submitting}
                 />}
             </Grid.Column>
         </Grid>

@@ -1,5 +1,5 @@
 export interface Vijest {
-    id: string
+    id?: string
     title: string
     content: string
     summary: string

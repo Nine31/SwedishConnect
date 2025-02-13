@@ -1,13 +1,21 @@
 import { Grid, Item, Image, Icon, Button } from "semantic-ui-react";
 import { Vijest } from "../../../app/models/vijest";
+import { SyntheticEvent, useState } from "react";
 
 interface Props {
     vijesti: Vijest[];
     selectVijest: (slug: string) => void;
     deleteVijest: (slug: string) => void;
+    submitting: boolean;
 }
 
-export default function VijestList({vijesti, selectVijest, deleteVijest}: Props) {
+export default function VijestList({vijesti, selectVijest, deleteVijest, submitting}: Props) {
+    const [target, setTarget] = useState('');
+
+    function handleVijestDelete(e: SyntheticEvent<HTMLButtonElement>, slug: string) {
+        setTarget(e.currentTarget.name);
+        deleteVijest(slug);
+    }
 
     return (
         <Grid columns={3} stackable>
@@ -32,8 +40,20 @@ export default function VijestList({vijesti, selectVijest, deleteVijest}: Props)
                                     <Icon name="eye" /> {vijest.views} pregleda
                                 </Item.Description>
                                 <Item.Extra>
-                                    <Button onClick={() => selectVijest(vijest.slug ?? '')} content="Čitaj" color="blue" size="small" />
-                                    <Button onClick={() => deleteVijest(vijest.slug ?? '')} content="Izbriši" color="red" size="small" />
+                                    <Button 
+                                        onClick={() => selectVijest(vijest.slug ?? '')} 
+                                        content="Čitaj" 
+                                        color="blue" 
+                                        size="small" 
+                                    />
+                                    <Button 
+                                        name={vijest.slug}
+                                        loading={submitting && target === vijest.slug}
+                                        onClick={(e) => handleVijestDelete(e, vijest.slug ?? '')} 
+                                        content="Izbriši" 
+                                        color="red" 
+                                        size="small" 
+                                    />
                                 </Item.Extra>
                             </Item.Content>
                         </Item>
