@@ -11,11 +11,11 @@
 
 .navbar {
   font-family: monospace !important;
-  background-color: rgba(6, 57, 115, 0.99) !important;
-  border: 1px solid #f1f0f0 !important;
-  box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.75) !important;
-  -webkit-box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.75) !important;
-  -moz-box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.75) !important;
+  background-color: rgba(232, 194, 18, 0.95) !important;
+  border: 1px solid #004275 !important;
+  box-shadow: 5px 5px 5px -3px rgba(0, 64, 124, 0.95) !important;
+  -webkit-box-shadow: 5px 5px 5px -3px rgba(0, 64, 124, 0.95) !important;
+  -moz-box-shadow: 5px 5px 5px -3px rgba(0, 64, 124, 0.95) !important;
   z-index: 1000 !important;
   height: 50px;
   cursor: pointer;
@@ -28,9 +28,11 @@
   top: 0;
   width: 100%;
   z-index: 1000 !important;
-  background-color: rgb(229, 247, 235) !important; ;
+  background-color: rgba(7, 67, 135, 0.99) !important;
   transition: background-color 0.3s ease;
-  box-shadow: 0 4px 2px -2px gray;
+  box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.95) !important;
+  -webkit-box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.95) !important;
+  -moz-box-shadow: 5px 5px 5px -3px rgba(232, 194, 18, 0.95) !important;
 }
 
 .vijest-card {
@@ -43,14 +45,35 @@
   padding: 10px;
   border-radius: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0px 0px 5px -3px rgba(0, 117, 60, 0.75) !important;
-  -webkit-box-shadow: 0px 0px 5px -3px rgba(0, 117, 60, 0.75) !important;
-  -moz-box-shadow: 0px 0px 5px -3px rgba(0, 117, 60, 0.75) !important;
+  box-shadow: 0px 0px 5px -3px rgba(0, 17, 110, 0.75) !important;
+  -webkit-box-shadow: 0px 0px 5px -3px rgba(0, 17, 110, 0.75) !important;
+  -moz-box-shadow: 0px 0px 5px -3px rgba(0, 17, 110, 0.75) !important;
   margin-right: 10px;
-  margin-left: 10px;
 }
 
 .vijest-card:hover {
-  transform: scale(1) scale(1.05);
-  box-shadow: 0px 0px 5px -3px rgba(0, 117, 60, 0.75) !important;
+  transform: scale(1) scale(1.03);
+  box-shadow: 7px 10px 7px -2px rgba(0, 17, 110, 0.95) !important;
 }
+
+.create-vijest {
+  background-color: #286 !important;
+}
+
+body{
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+  user-select: none;
+  align-items: center;
+}
+
+/* #tsparticles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: black;
+} */

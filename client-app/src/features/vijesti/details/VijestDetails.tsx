@@ -1,20 +1,16 @@
 import { Button, Card, Image } from "semantic-ui-react";
-import { Vijest } from "../../../app/models/vijest";
+import { useStore } from "../../../app/stores/store";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
-interface Props {
-    vijest: Vijest;
-    cancelSelectVijest: () => void;
-    openForm: (slug: string) => void;
-}
+export default function VijestDetails() {
+    const {vijestStore} = useStore();
+    const {selectedVijest: vijest, openForm, cancelSelectedVijest} = vijestStore;
 
-export default function VijestDetails({vijest, cancelSelectVijest, openForm}: Props) {
-    if (!vijest) {
-        return <h2>Vijest nije pronađena...</h2>;
-    }
+    if (!vijest) return <LoadingComponent />
 
     return (
         <Card fluid>
-            <Image src={vijest.pictureUrl}/>
+            <Image src={vijest.pictureUrl || '/assets/Vijest_Slike/News.jpg'} />
             <Card.Content>
                 <Card.Header>{vijest.title}</Card.Header>
                 <Card.Meta>
@@ -23,14 +19,14 @@ export default function VijestDetails({vijest, cancelSelectVijest, openForm}: Pr
                 <Card.Description>
                     {vijest.content}
                 </Card.Description>
+                <Card.Meta>
+                    <span>{vijest.tags.join(', ')}</span>
+                </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <a>
-                    {vijest.summary}
-                </a>
                 <Button.Group widths={2}>
-                    <Button onClick={() => openForm(vijest.slug ?? '')} basic color="blue" content='Izmjeni'/>
-                    <Button onClick={cancelSelectVijest} basic color="grey" content='Otkazi'/>
+                    <Button onClick={() => openForm(vijest.slug ?? '')} basic color="blue" content='Izmjeni' />
+                    <Button onClick={cancelSelectedVijest} basic color="red" content='Otkaži' />
                 </Button.Group>
             </Card.Content>
         </Card>

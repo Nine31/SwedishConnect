@@ -1,26 +1,22 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Menu } from "semantic-ui-react";
+import { useStore } from "../stores/store";
+import { 
+    Home, Newspaper, CalendarDays, Briefcase, 
+    Languages, Plane, Database, Info, Phone 
+} from "lucide-react";
 
-interface Props {
-    openForm: (slug?: string) => void;
-}
+export default function NavBar() {
+    const {vijestStore} = useStore();
 
-export default function NavBar({openForm}: Props) {
     const [isSticky, setIsSticky] = useState(false);
 
     const handleScroll = () => {
-        const offset = window.scrollY;
-        // setIsSticky(offset > 180);
-        if (offset > 180) {
-            setIsSticky(true);
-        } else {
-            setIsSticky(false);
-        }
+        setIsSticky(window.scrollY > 180);
     };
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -34,27 +30,41 @@ export default function NavBar({openForm}: Props) {
 
             <Menu fixed={isSticky ? 'top' : undefined} className={`navbar ${isSticky ? 'sticky' : ''}`}>
                 <Container>
-                    {/* <Menu.Item as={NavLink} to='/' name="Početna" icon='home' /> */}
-                    {/* <Menu.Item as={NavLink} to='hutbe' name="Hutbe" icon='bullhorn' /> */}
-                    {/* <Menu.Item as={NavLink} to='vijesti' name="Vijesti" icon='newspaper' /> */}
-                    {/* <Menu.Item as={NavLink} to='dogadjaji' name="Događaji" icon='calendar alternate' /> */}
-                    <Menu.Item name="Aktivnosti" icon='tasks' />
-                    <Menu.Item name="Vakuf" icon='university' />
-                    <Menu.Item name="Ajeti" icon='book' />
-                    <Menu.Item name="Hadisi" icon='quote left' />
-                    <Menu.Item name="Dženaze" icon='leaf' />
-                    <Menu.Item name="O nama" icon='info circle' />
-                    <Menu.Item name="Kontakt" icon='phone' />
-                    <Menu.Item name="Kalendar" icon='calendar' />
-                    <Menu.Item>
-                        {/* <Button className="create-hutba" as={NavLink} to='kreiraj-hutbu' content='Kreiraj hutbu' />
-                        <Button className="create-vijest" as={NavLink} to='kreiraj-vijest' content='Kreiraj vijest'/> */}
+                    <Menu.Item className="navbar">
+                        <Home size={20} /> Početna
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Newspaper size={20} /> Vijesti iz Švedske
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Newspaper size={20} /> Vijesti sa Balkana
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <CalendarDays size={20} /> A-kassa
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Briefcase size={20} /> Radna prava
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Languages size={20} /> Švedski jezik
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Plane size={20} /> Destinacije
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Database size={20} /> Resursi
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Info size={20} /> O nama
+                    </Menu.Item>
+                    <Menu.Item className="navbar">
+                        <Phone size={20} /> Kontakt
                     </Menu.Item>
                 </Container>
             </Menu>
-            {/* <Button className="create-hutba" as={NavLink} to='kreiraj-hutbu' content='Kreiraj hutbu' /> */}
-            <Button className="create-vijest" onClick={() => openForm()} positive content='Kreiraj vijest'/>
-            {/* <Button className="create-dogadjaj" as={NavLink} to='kreiraj-dogadjaj' content='Kreiraj događaj'/> */}
+            <Button className="create-hutba" content='Kreiraj hutbu' />
+            <Button onClick={() => vijestStore.openForm()} positive className="create-vijest" content='Kreiraj vijest'/>
+            <Button className="create-dogadjaj" content='Kreiraj događaj'/>
         </>
     )
 }

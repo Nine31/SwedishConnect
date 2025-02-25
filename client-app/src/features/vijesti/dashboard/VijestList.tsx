@@ -1,15 +1,12 @@
-import { Grid, Item, Image, Icon, Button } from "semantic-ui-react";
-import { Vijest } from "../../../app/models/vijest";
+import { Button, Grid, Header, Icon, Image, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    vijesti: Vijest[];
-    selectVijest: (slug: string) => void;
-    deleteVijest: (slug: string) => void;
-    submitting: boolean;
-}
+export default observer(function VijestList() {
+    const {vijestStore} = useStore();
+    const {deleteVijest, loading, vijestiByCategory} = vijestStore;
 
-export default function VijestList({vijesti, selectVijest, deleteVijest, submitting}: Props) {
     const [target, setTarget] = useState('');
 
     function handleVijestDelete(e: SyntheticEvent<HTMLButtonElement>, slug: string) {
@@ -18,48 +15,58 @@ export default function VijestList({vijesti, selectVijest, deleteVijest, submitt
     }
 
     return (
-        <Grid columns={3} stackable>
-            {vijesti.map(vijest => (
-                <Grid.Column key={vijest.id}>
-                    <div className="vijest-card">
-                        <Image 
-                            src={vijest.pictureUrl || '/assets/Logo/Logga.png'}
-                            style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '15px' }}
-                        />
+        <>
+            {vijestiByCategory.map(([category, vijesti]) => (
+                <Segment key={category}>
+                    <Header as="h2" color="blue">
+                        {category}
+                    </Header>
+                    <Grid columns={2}>
+                        <Grid.Row>
+                            {vijesti.map((vijest) => (
+                                <Grid.Column key={vijest.slug} width={7}>
+                                    <div className="hutba-card">
+                                        <Image
+                                            src={vijest.pictureUrl || '/assets/Vijest_Slike/News.jpg'}
+                                            style={{ height: '200px', objectFit: 'cover' }}
+                                        />
+                                        <h3 className="hutba-title">{vijest.title}</h3>
+                                        <span className="hutba-date">{vijest.publishedDate}</span>
+                                        <Icon name="eye" className="icon-views">
+                                            &nbsp;{vijest.views}
+                                        </Icon>
+                                        <Label
+                                            style={{ position: 'absolute', marginLeft: 20, marginTop: -275 }}
+                                            ribbon
+                                            color="green"
+                                        >
+                                            {vijest.category}
+                                        </Label>
 
-                        {/* Tekstualni sadržaj */}
-                        <Item>
-                            <Item.Content>
-                                <Item.Header as="h3" style={{ marginTop: '10px' }}>
-                                    {vijest.title}
-                                </Item.Header>
-                                <Item.Meta>
-                                    <span className="vijest-date">{new Date(vijest.publishedDate).toLocaleDateString()}</span>
-                                </Item.Meta>
-                                <Item.Description>
-                                    <Icon name="eye" /> {vijest.views} pregleda
-                                </Item.Description>
-                                <Item.Extra>
-                                    <Button 
-                                        onClick={() => selectVijest(vijest.slug ?? '')} 
-                                        content="Čitaj" 
-                                        color="blue" 
-                                        size="small" 
-                                    />
-                                    <Button 
-                                        name={vijest.slug}
-                                        loading={submitting && target === vijest.slug}
-                                        onClick={(e) => handleVijestDelete(e, vijest.slug ?? '')} 
-                                        content="Izbriši" 
-                                        color="red" 
-                                        size="small" 
-                                    />
-                                </Item.Extra>
-                            </Item.Content>
-                        </Item>
-                    </div>
-                </Grid.Column>
+                                        <div className="hutba-button">
+                                            <Button
+                                                className="citaj"
+                                                onClick={() => vijestStore.selectVijest(vijest.slug ?? '')}
+                                                floated="left"
+                                                content="Čitaj"
+                                                color="blue"
+                                            />
+                                            <Button
+                                                className="izbrisi"
+                                                name={vijest.slug}
+                                                loading={loading && target === vijest.slug}
+                                                content="Izbriši"
+                                                color="red"
+                                                onClick={(e) => handleVijestDelete(e, vijest.slug ?? '')}
+                                            />
+                                        </div>
+                                    </div>
+                                </Grid.Column>
+                            ))}
+                        </Grid.Row>
+                    </Grid>
+                </Segment>
             ))}
-        </Grid>
+        </>
     );
-}
+})

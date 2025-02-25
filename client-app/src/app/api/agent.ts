@@ -30,10 +30,10 @@ const requests = {
 
 const Vijesti = {
     list: () => requests.get<Vijest[]>('/vijesti'),
-    details: (slug: string) => requests.get<Vijest[]>(`/vijesti/${slug}`),
-    create: (vijest: Vijest) => axios.post<Vijest>('/vijesti', vijest),
-    update: (vijest: Vijest) => axios.put<void>(`/vijesti/${vijest.slug}`, vijest),
-    delete: (slug: string) => axios.delete<void>(`/vijesti/${slug}`)
+    details: (id: string) => requests.get<Vijest>(`/vijesti/${id}`),
+    create: (vijest: Vijest) => axios.post<void>('/vijesti', vijest),
+    update: (vijest: Vijest) => axios.put<void>(`/vijesti/${vijest.id}`, vijest),
+    delete: (id: string) => axios.delete<void>(`/vijesti/${id}`)
 }
 
 const agent = {

@@ -1,132 +1,106 @@
 import { Button, Checkbox, CheckboxProps, Form, Segment } from "semantic-ui-react";
-import { Vijest } from "../../../app/models/vijest";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    vijest: Vijest | undefined;
-    closeForm: () => void;
-    createOrEdit: (vijest: Vijest) => void;
-    submitting: boolean;
-}
-
-export default function VijestForm({vijest: selectedVijest, closeForm, createOrEdit, submitting}: Props) {
+export default observer(function VijestForm() {
+    const {vijestStore} = useStore();
+    const {selectedVijest, closeForm, createVijest, updateVijest, loading} = vijestStore;
 
     const initialState = selectedVijest ?? {
-        id: '',
-        title: '',
-        content: '',
-        summary: '',
-        author: '',
-        pictureUrl: '',
-        category: '',
-        publishedDate: new Date().toISOString().split('T')[0],
+        title: "",
+        content: "",
+        summary: "",
+        author: "",
+        pictureUrl: "",
+        category: "",
+        publishedDate: new Date().toISOString(),
         views: 0,
-        isFeatured: true,
+        isFeatured: false,
         tags: []
     }
 
-    const [vijest, setVijesti] = useState(initialState);
+    const [tagInput, setTagInput] = useState('');
+    
+    const [vijest, setVijest] = useState(initialState);
 
     function handleSubmit() {
-        createOrEdit(vijest);
+        vijest.slug ? updateVijest(vijest) : createVijest(vijest);
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = event.target;
-        setVijesti({...vijest, [name]: value})
+        setVijest({...vijest, [name]: value})
     }
 
-    function handleCheckboxChange(event: FormEvent<HTMLInputElement>, data: CheckboxProps) {
-        setVijesti({ ...vijest, isFeatured: data.checked ?? false });
+    function handleCheckboxChange( event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) {
+        setVijest({...vijest, isFeatured: data.checked ?? false});
     }
 
-    function handleTagsChange(event: ChangeEvent<HTMLInputElement>) {
-        const tagsArray = event.target.value.split(',').map(tag => tag.trim()); 
-        setVijesti({ ...vijest, tags: tagsArray });
+    function handleTagInputChange(event: ChangeEvent<HTMLInputElement>) {
+        setTagInput(event.target.value);
+    }
+
+    function handleTagKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+        if (event.key === 'Enter' || event.key === ',') {
+            event.preventDefault();
+            const trimmedTag = tagInput.trim();
+            if (trimmedTag && !vijest.tags.includes(trimmedTag)) {
+                setVijest({ ...vijest, tags: [...vijest.tags, trimmedTag] });
+                setTagInput('');
+            }
+        }
+    }
+
+    function handleRemoveTag(index: number) {
+        const updatedTags = vijest.tags.filter((_, i) => i !== index);
+        setVijest({ ...vijest, tags: updatedTags });
     }
 
     return (
-        <Segment clearing>
-            <Form onSubmit={handleSubmit} autoComplete='off'>
-                <Form.Input 
-                    placeholder='Naslov' 
-                    value={vijest.title} 
-                    name='title' 
-                    onChange={handleInputChange} 
-                />
-                <Form.Input 
-                    placeholder='Sažetak' 
-                    value={vijest.summary} 
-                    name='summary' 
-                    onChange={handleInputChange} 
-                />
-                <Form.TextArea 
-                    placeholder='Sadržaj vijesti...' 
-                    value={vijest.content} 
-                    name='content' 
-                    onChange={handleInputChange} 
-                />
-                <Form.Input 
-                    placeholder='Link slike' 
-                    value={vijest.pictureUrl} 
-                    name='pictureUrl' 
-                    onChange={handleInputChange} 
-                />
+        <Segment clearing className="okvir" >
+            <Form onSubmit={handleSubmit} autoComplete='off' >
+                <Form.Input placeholder='Naslov' value={vijest.title} name='title' onChange={handleInputChange} />
+                <Form.TextArea placeholder='Napiši vijest...' value={vijest.content} name='content' onChange={handleInputChange} />
+                <Form.Input placeholder='Link slike' value={vijest.pictureUrl} name='pictureUrl' onChange={handleInputChange} />
                 <Form.Group widths='equal'>
+                    <Form.Input placeholder='Autor' value={vijest.author} name='author' onChange={handleInputChange} />
+                    <Form.Input placeholder='Kategorija' value={vijest.category} name='category' onChange={handleInputChange} />
+                </Form.Group>
+                <Form.Group widths='equal'>
+                    <Form.Input type="date" placeholder='Datum' value={vijest.publishedDate} name='publishedDate' onChange={handleInputChange} />
                     <Form.Input 
-                        placeholder='Autor' 
-                        value={vijest.author} 
-                        name='author' 
-                        onChange={handleInputChange} 
-                    />
-                    <Form.Input 
-                        type="date" 
-                        placeholder='Datum' 
-                        value={vijest.publishedDate} 
-                        name='publishedDate' 
-                        onChange={handleInputChange} 
+                        placeholder='Tagovi (pritisni Enter ili zarez za dodavanje)' 
+                        value={tagInput} 
+                        onChange={handleTagInputChange} 
+                        onKeyDown={handleTagKeyDown}
                     />
                 </Form.Group>
-                <Form.Input 
-                    placeholder='Kategorija' 
-                    value={vijest.category} 
-                    name='category' 
-                    onChange={handleInputChange} 
-                />
-                <Form.Input 
-                    disabled 
-                    placeholder='Pregledi' 
-                    value={vijest.views} 
-                    name='views' 
-                    onChange={handleInputChange}
-                />
+                <div>
+                    {vijest.tags.map((tag, index) => (
+                        <span key={index} style={{ marginRight: '5px' }}>
+                            {tag}
+                            <Button
+                                onClick={() => handleRemoveTag(index)}
+                                size='mini'
+                                color='red'
+                                icon='delete'
+                                style={{ marginLeft: '5px' }}
+                            /> 
+                        </span>
+                    ))}
+                </div>
+                <Form.Input disabled placeholder='Pregledi' value={vijest.views} name='views' onChange={handleInputChange} />
                 <Form.Field>
                     <Checkbox 
                         label='Aktuelno' 
-                        checked={vijest.isFeatured}
-                        onChange={handleCheckboxChange}
+                        checked={vijest.isFeatured} 
+                        onChange={handleCheckboxChange} 
                     />
                 </Form.Field>
-                <Form.Input 
-                    placeholder='Tagovi (pritisni Enter ili zarez za dodavanje)' 
-                    value={vijest.tags.join(',')} 
-                    name='tags' 
-                    onChange={handleTagsChange} 
-                />
-                <Button 
-                    loading={submitting} 
-                    floated='right' 
-                    positive 
-                    type='submit' 
-                    content='Potvrdi' 
-                />
-                <Button 
-                    onClick={closeForm} 
-                    floated='right' 
-                    type='button' 
-                    content='Otkaži' 
-                />
+                <Button loading={loading} className="potvrdi" floated='right' positive type='submit' content='Potvrdi' />
+                <Button onClick={closeForm} className="otkazi" floated='right' type='button' content='Otkaži' />
             </Form>
         </Segment>
     )
-}
+})
