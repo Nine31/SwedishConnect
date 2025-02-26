@@ -1,13 +1,19 @@
 import { Grid } from "semantic-ui-react";
 import VijestList from "./VijestList";
-import VijestDetails from "../details/VijestDetails";
-import VijestForm from "../form/VijestForm";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 export default observer(function VijestDashboard() {
     const {vijestStore} = useStore();
-    const {selectedVijest, editMode} = vijestStore;
+    const {loadVijesti, vijestRegistry} = vijestStore;
+
+    useEffect(() => {
+        if (vijestRegistry.size <= 1) loadVijesti();
+    }, [loadVijesti])
+    
+      if (vijestStore.loadingInitial) return <LoadingComponent content='Učitavanje vijesti...' />
 
     return (
         <Grid>
@@ -15,10 +21,7 @@ export default observer(function VijestDashboard() {
                 <VijestList />
             </Grid.Column>
             <Grid.Column width='6'>
-                {selectedVijest && !editMode &&
-                <VijestDetails />}
-                {editMode &&
-                <VijestForm />}
+                <h2>Istaknute vijesti:</h2>
             </Grid.Column>
         </Grid>
     )

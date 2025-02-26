@@ -7,7 +7,7 @@ export default class VijestStore {
     selectedVijest: Vijest | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -33,11 +33,11 @@ export default class VijestStore {
     }
 
     loadVijesti = async () => {
+        this.setLoadingInitial(true);
         try {
             const vijesti = await agent.Vijesti.list();
             vijesti.forEach(vijest => {
-                vijest.publishedDate = vijest.publishedDate.split('T')[0];
-                this.vijestRegistry.set(vijest.slug!, vijest);
+                this.setVijest(vijest);
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -46,10 +46,31 @@ export default class VijestStore {
         }
     }
 
+    loadVijest = async (slug: string) => {
+        let vijest = this.getVijest(slug);
+        if (vijest) {
+            this.selectedVijest = vijest;
+            return vijest;
+        }
+        else {
+            this.setLoadingInitial(true);
+            try {
+                vijest = await agent.Vijesti.details(slug);
+                this.setVijest(vijest);
+                runInAction(() => this.selectedVijest = vijest);
+                this.setLoadingInitial(false);
+                return vijest;
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
-
+    
     createVijest = async (vijest: Vijest) => {
         this.loading = true;
         try {
@@ -88,7 +109,6 @@ export default class VijestStore {
         try {
             await agent.Vijesti.delete(slug);
             runInAction(() => {
-                if (this.selectedVijest?.slug === slug) this.cancelSelectedVijest();
                 this.vijestRegistry.delete(slug);
                 this.loading = false;
             })
@@ -100,21 +120,13 @@ export default class VijestStore {
         }
     }
 
-    selectVijest = (slug: string) => {
-        this.selectedVijest = this.vijestRegistry.get(slug);
+    private setVijest = (vijest: Vijest) => {
+        vijest.publishedDate = vijest.publishedDate.split('T') [0];
+        this.vijestRegistry.set(vijest.slug!, vijest);
     }
 
-    cancelSelectedVijest = () => {
-        this.selectedVijest = undefined;
-    }
-
-    openForm = (slug?: string) => {
-        slug ? this.selectVijest(slug) : this.cancelSelectedVijest();
-        this.editMode = true;
-    }
-
-    closeForm = () => {
-        this.editMode = false;
+    private getVijest = (slug: string) => {
+        return this.vijestRegistry.get(slug);
     }
 }
     

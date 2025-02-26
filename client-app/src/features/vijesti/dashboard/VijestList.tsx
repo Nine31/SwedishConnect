@@ -2,6 +2,7 @@ import { Button, Grid, Header, Icon, Image, Label, Segment } from "semantic-ui-r
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 export default observer(function VijestList() {
     const {vijestStore} = useStore();
@@ -45,8 +46,9 @@ export default observer(function VijestList() {
 
                                         <div className="hutba-button">
                                             <Button
+                                                as={Link}
+                                                to={`/vijesti/${vijest.slug ?? ''}`}
                                                 className="citaj"
-                                                onClick={() => vijestStore.selectVijest(vijest.slug ?? '')}
                                                 floated="left"
                                                 content="Čitaj"
                                                 color="blue"

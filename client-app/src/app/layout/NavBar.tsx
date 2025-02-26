@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Menu } from "semantic-ui-react";
-import { useStore } from "../stores/store";
 import { 
     Home, Newspaper, CalendarDays, Briefcase, 
     Languages, Plane, Database, Info, Phone 
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
-    const {vijestStore} = useStore();
 
     const [isSticky, setIsSticky] = useState(false);
 
@@ -30,13 +29,13 @@ export default function NavBar() {
 
             <Menu fixed={isSticky ? 'top' : undefined} className={`navbar ${isSticky ? 'sticky' : ''}`}>
                 <Container>
-                    <Menu.Item className="navbar">
+                    <Menu.Item as={NavLink} to='/' className="navbar">
                         <Home size={20} /> Početna
                     </Menu.Item>
-                    <Menu.Item className="navbar">
+                    <Menu.Item as={NavLink} to='/vijesti' className="navbar">
                         <Newspaper size={20} /> Vijesti iz Švedske
                     </Menu.Item>
-                    <Menu.Item className="navbar">
+                    <Menu.Item as={NavLink} to='/vijesti' className="navbar">
                         <Newspaper size={20} /> Vijesti sa Balkana
                     </Menu.Item>
                     <Menu.Item className="navbar">
@@ -63,7 +62,7 @@ export default function NavBar() {
                 </Container>
             </Menu>
             <Button className="create-hutba" content='Kreiraj hutbu' />
-            <Button onClick={() => vijestStore.openForm()} positive className="create-vijest" content='Kreiraj vijest'/>
+            <Button as={NavLink} to='kreiraj-vijest' positive className="create-vijest" content='Kreiraj vijest'/>
             <Button className="create-dogadjaj" content='Kreiraj događaj'/>
         </>
     )

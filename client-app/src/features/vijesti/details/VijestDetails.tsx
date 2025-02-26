@@ -1,12 +1,20 @@
 import { Button, Card, Image } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { observer } from "mobx-react-lite";
+import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function VijestDetails() {
+export default observer(function VijestDetails() {
     const {vijestStore} = useStore();
-    const {selectedVijest: vijest, openForm, cancelSelectedVijest} = vijestStore;
+    const {selectedVijest: vijest, loadVijest, loadingInitial} = vijestStore;
+    const {slug} = useParams();
 
-    if (!vijest) return <LoadingComponent />
+    useEffect(() => {
+        if (slug) loadVijest(slug);
+    }, [slug, loadVijest])
+
+    if (loadingInitial || !vijest) return <LoadingComponent />
 
     return (
         <Card fluid>
@@ -25,10 +33,10 @@ export default function VijestDetails() {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths={2}>
-                    <Button onClick={() => openForm(vijest.slug ?? '')} basic color="blue" content='Izmjeni' />
-                    <Button onClick={cancelSelectedVijest} basic color="red" content='Otkaži' />
+                    <Button as={Link} to={`/azuriraj-vijest/${vijest.slug}`} basic color="blue" content='Izmjeni' />
+                    <Button as={Link} to={'/vijesti'} basic color="red" content='Otkaži' />
                 </Button.Group>
             </Card.Content>
         </Card>
     )
-}
+})

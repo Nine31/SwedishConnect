@@ -32,7 +32,7 @@ const Vijesti = {
     list: () => requests.get<Vijest[]>('/vijesti'),
     details: (id: string) => requests.get<Vijest>(`/vijesti/${id}`),
     create: (vijest: Vijest) => axios.post<void>('/vijesti', vijest),
-    update: (vijest: Vijest) => axios.put<void>(`/vijesti/${vijest.id}`, vijest),
+    update: (vijest: Vijest) => axios.put<void>(`/vijesti/${vijest.slug}`, vijest),
     delete: (id: string) => axios.delete<void>(`/vijesti/${id}`)
 }
 

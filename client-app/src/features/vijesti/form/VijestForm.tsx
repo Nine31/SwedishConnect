@@ -1,13 +1,18 @@
 import { Button, Checkbox, CheckboxProps, Form, Segment } from "semantic-ui-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Vijest } from "../../../app/models/vijest";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 export default observer(function VijestForm() {
     const {vijestStore} = useStore();
-    const {selectedVijest, closeForm, createVijest, updateVijest, loading} = vijestStore;
+    const {selectedVijest, createVijest, updateVijest, loading, loadVijest, loadingInitial} = vijestStore;
+    const {slug} = useParams();
+    const navigate = useNavigate();
 
-    const initialState = selectedVijest ?? {
+    const [vijest, setVijest] = useState<Vijest>({
         title: "",
         content: "",
         summary: "",
@@ -18,20 +23,28 @@ export default observer(function VijestForm() {
         views: 0,
         isFeatured: false,
         tags: []
-    }
+    })
+
+    useEffect(() => {
+        if (slug) loadVijest(slug).then(vijest => setVijest(vijest!))
+    }, [slug, loadVijest])
 
     const [tagInput, setTagInput] = useState('');
     
-    const [vijest, setVijest] = useState(initialState);
-
     function handleSubmit() {
-        vijest.slug ? updateVijest(vijest) : createVijest(vijest);
+        if (!vijest.slug) {
+            createVijest(vijest).then(() => navigate(`/vijesti/${vijest.slug}`))
+        } else {
+            updateVijest(vijest).then(() => navigate(`/vijesti/${vijest.slug}`))
+        }
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = event.target;
         setVijest({...vijest, [name]: value})
     }
+
+    if (loadingInitial) return <LoadingComponent content="Učitavanje vijesti..." />
 
     function handleCheckboxChange( event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) {
         setVijest({...vijest, isFeatured: data.checked ?? false});
@@ -99,7 +112,7 @@ export default observer(function VijestForm() {
                     />
                 </Form.Field>
                 <Button loading={loading} className="potvrdi" floated='right' positive type='submit' content='Potvrdi' />
-                <Button onClick={closeForm} className="otkazi" floated='right' type='button' content='Otkaži' />
+                <Button as={Link} to={`/vijesti/${vijest.slug ?? ''}`} className="otkazi" floated='right' type='button' content='Otkaži' />
             </Form>
         </Segment>
     )
