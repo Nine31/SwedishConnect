@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { Button, Container, Menu } from "semantic-ui-react";
 import { 
     Home, Newspaper, CalendarDays, Briefcase, 
-    Languages, Plane, Database, Info, Phone 
+    Languages, Plane, Database,
+    AlignJustify,
+    X
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
-
     const [isSticky, setIsSticky] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const handleScroll = () => {
         setIsSticky(window.scrollY > 180);
@@ -22,48 +24,56 @@ export default function NavBar() {
     }, []);
 
     return (
-        <>
+        <div className="navbar-wrapper">
             <div className="logo-container">
-                <a href="/"><img src="/assets/Logo/Logga.png" alt="logo" className="slika"/></a>
+                <a href="/">
+                <img 
+                    src="/assets/Logo/Logga.png"
+                    alt="logo" 
+                    className="logo"
+                /></a>
             </div>
 
-            <Menu fixed={isSticky ? 'top' : undefined} className={`navbar ${isSticky ? 'sticky' : ''}`}>
+            <Menu fixed={isSticky ? 'top' : undefined} className={`custom-navbar ${isSticky ? 'sticky' : ''}`}>
                 <Container>
-                    <Menu.Item as={NavLink} to='/' className="navbar">
-                        <Home size={20} /> Početna
+                    <Menu.Item className="mobile-menu-button" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                        {isMobileMenuOpen ? <X size={24} /> : <AlignJustify size={24} />}
                     </Menu.Item>
-                    <Menu.Item as={NavLink} to='/vijesti' className="navbar">
-                        <Newspaper size={20} /> Vijesti iz Švedske
-                    </Menu.Item>
-                    <Menu.Item as={NavLink} to='/vijesti' className="navbar">
-                        <Newspaper size={20} /> Vijesti sa Balkana
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <CalendarDays size={20} /> A-kassa
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Briefcase size={20} /> Radna prava
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Languages size={20} /> Švedski jezik
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Plane size={20} /> Destinacije
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Database size={20} /> Resursi
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Info size={20} /> O nama
-                    </Menu.Item>
-                    <Menu.Item className="navbar">
-                        <Phone size={20} /> Kontakt
-                    </Menu.Item>
+
+                    <div className={`menu-items ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+                        <Menu.Item as={NavLink} to='/' className="nav-item">
+                            <Home size={20} /> <span>Početna</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/vijesti' className="nav-item">
+                            <Newspaper size={20} /> <span>Vijesti iz Švedske</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/vijesti' className="nav-item">
+                            <Newspaper size={20} /> <span>Vijesti sa Balkana</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/a-kassa' className="nav-item">
+                            <CalendarDays size={20} /> <span>A-kassa</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/radna-prava' className="nav-item">
+                            <Briefcase size={20} /> <span>Radna prava</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/svedski-jezik' className="nav-item">
+                            <Languages size={20} /> <span>Švedski jezik</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/destinacije' className="nav-item">
+                            <Plane size={20} /> <span>Destinacije</span>
+                        </Menu.Item>
+                        <Menu.Item as={NavLink} to='/resursi' className="nav-item">
+                            <Database size={20} /> <span>Resursi</span>
+                        </Menu.Item>
+                    </div>
+
+                    <div className="action-buttons">
+                        <Button as={NavLink} to='/kreiraj-vijest' positive>Kreiraj vijest</Button>
+                        <Button primary>Kreiraj hutbu</Button>
+                        <Button color='purple'>Kreiraj događaj</Button>
+                    </div>
                 </Container>
             </Menu>
-            <Button className="create-hutba" content='Kreiraj hutbu' />
-            <Button as={NavLink} to='kreiraj-vijest' positive className="create-vijest" content='Kreiraj vijest'/>
-            <Button className="create-dogadjaj" content='Kreiraj događaj'/>
-        </>
-    )
+        </div>
+    );
 }

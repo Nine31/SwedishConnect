@@ -4,6 +4,7 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import VijestIsFeatured from "./VijestIsFeatured";
 
 export default observer(function VijestDashboard() {
     const {vijestStore} = useStore();
@@ -17,11 +18,13 @@ export default observer(function VijestDashboard() {
 
     return (
         <Grid>
-            <Grid.Column width='10'>
+            <Grid.Column width='12'>
                 <VijestList />
             </Grid.Column>
-            <Grid.Column width='6'>
-                <h2>Istaknute vijesti:</h2>
+            <Grid.Column width='4'>
+                <div>
+                    <VijestIsFeatured />
+                </div>
             </Grid.Column>
         </Grid>
     )
