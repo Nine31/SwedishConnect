@@ -17,7 +17,7 @@ export default observer(function VijestDetailedComment() {
                     <Comment>
                         <Comment.Avatar src='/assets/user.png'/>
                         <Comment.Content>
-                            <Comment.Author as='a'>Jusuf</Comment.Author>
+                            <Comment.Author as='a'>Moderator</Comment.Author>
                             <Comment.Metadata>
                                 <div>Idag kl. 14:15</div>
                             </Comment.Metadata>
@@ -31,7 +31,7 @@ export default observer(function VijestDetailedComment() {
                     <Comment>
                         <Comment.Avatar src='/assets/user.png'/>
                         <Comment.Content>
-                            <Comment.Author as='a'>Alvedin</Comment.Author>
+                            <Comment.Author as='a'>Admin</Comment.Author>
                             <Comment.Metadata>
                                 <div>prije 2 dana</div>
                             </Comment.Metadata>

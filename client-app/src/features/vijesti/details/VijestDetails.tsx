@@ -5,7 +5,6 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import VijestDetailedContent from "./VijestDetailedContent";
-import VijestDetailedComment from "./VijestDetailedComment";
 
 export default observer(function VijestDetails() {
     const {vijestStore} = useStore();
@@ -22,8 +21,6 @@ export default observer(function VijestDetails() {
         <Grid>
             <Grid.Column width={16}>
                 <VijestDetailedContent vijest={vijest} />
-                < br />< br />
-                <VijestDetailedComment />
             </Grid.Column>
         </Grid>
     )

@@ -2,19 +2,15 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Button, Divider, Icon, Image } from "semantic-ui-react";
 import { Vijest } from "../../../app/models/vijest";
+import { useEffect, useState } from "react";
+import VijestDetailedComment from "./VijestDetailedComment";
 
 interface Props {
     vijest: Vijest
 }
 
 export default observer(function VijestDetailedContent({vijest}: Props) {
-
-    function formatContent(content: string) {
-        if (!content) return '';
-        return content
-            .replace(/\*\*(.*?)\*\*/g, '<span class="subtitle">$1</span>') 
-            .replace(/“(.*?)”/g, '<span class="quote">“$1”</span>');
-    }
+    const [titleLines, setTitleLines] = useState(1);
 
     // Podjela sadržaja na pasuse
     const paragraphs = vijest.content.split("\n\n");
@@ -34,9 +30,25 @@ export default observer(function VijestDetailedContent({vijest}: Props) {
         return authorImages[author] || "/assets/Avatar/user.png"; // Default slika ako autor nije poznat
     };
 
+    useEffect(() => {
+        const titleElement = document.querySelector(".vijest-details-naslov");
+        if (titleElement) {
+            const lineHeight = parseFloat(getComputedStyle(titleElement).lineHeight);
+            const titleHeight = titleElement.clientHeight;
+            setTitleLines(Math.round(titleHeight / lineHeight));
+        }
+    }, [vijest.title]);
+
+    function formatContent(content: string) {
+        if (!content) return '';
+        return content
+            .replace(/\*\*(.*?)\*\*/g, '<span class="subtitle">$1</span>') 
+            .replace(/“(.*?)”/g, '<span class="quote">“$1”</span>');
+    }
+
     return (
 
-        <div className="drybn-blog">
+        <div className="drybn-blog" style={{ "--title-lines": titleLines } as React.CSSProperties}>
             <div className="drybn-blog__overlay">
 
                 <div
@@ -49,14 +61,14 @@ export default observer(function VijestDetailedContent({vijest}: Props) {
                         <p className="vijest-details-datum">{vijest.publishedDate}</p>
                         <h2 className="vijest-details-naslov">{vijest.title}</h2>
                         <p className="vijest-details-author">
-                            <Image className="avatar-list-author" src={getAuthorImage(vijest.author)} />
+                            <Image className="avatar-list-author" src={getAuthorImage(vijest.author)} />Autor:
                                 {vijest.author}
                         </p>
                         <br />
-                        <span className="vijest-details-pregledi"><Icon name="eye" />{vijest.views}</span>
+                        <span className="vijest-details-pregledi"><Icon name="eye" />Broj pregleda: {vijest.views}</span>
                     </div>
 
-                    <div className="vijest-body">
+                    <div className="vijest-details-body">
                         
                         <p className="sazetak-details-vijesti">{vijest.summary}</p>
                         <Divider></Divider>
@@ -178,11 +190,12 @@ export default observer(function VijestDetailedContent({vijest}: Props) {
 
                         <Divider></Divider>
 
-                        <div className="vijesti-details-buttons">
+                        {/* <div className="vijesti-details-buttons">
                             <Button as={Link} to={`/azuriraj-vijest/${vijest.slug}`} color="blue" content="Izmjeni" />
                             <Button as={Link} to={'/vijesti'} color="red" content="Otkaži" />
-                        </div>
+                        </div> */}
                     </div>
+                    <VijestDetailedComment />
                 </div>
             </div>
         </div>

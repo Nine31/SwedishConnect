@@ -10,7 +10,7 @@ export default observer(function VijestList() {
 
     const [target, setTarget] = useState('');
 
-    function handleVijestDelete(e: SyntheticEvent<HTMLButtonElement>, slug: string) {
+        function handleVijestDelete(e: SyntheticEvent<HTMLButtonElement>, slug: string) {
         setTarget(e.currentTarget.name);
         deleteVijest(slug);
     }
@@ -19,13 +19,13 @@ export default observer(function VijestList() {
         Sport: "🏆" , 
         "Crna Hronika": "🚨",
         Razno: "💡",
-        BIH: "",
+        BIH: "💙",
         Svijet: "🌍",
         Kultura: "🎭"
     };
     
     const getCategoryIcon = (category: string) => {
-        return categoryIcons[category] || "💚";
+        return categoryIcons[category] || "📰";
     };
 
     // Mapa autora sa slikama
@@ -69,58 +69,59 @@ export default observer(function VijestList() {
         <>
             {vijestiByCategory.map(([category, vijesti]) => (
                 <div key={category}>
-                    <Header as="h2">
+                    <Header as="h2" className="vijest-header-category">
                         {getCategoryIcon(category)} {category}
                     </Header>
-                    <Divider />
-
                     <Grid columns={6} doubling stackable>
                         
                             <Grid.Row className="vijest-card-container">
+                                <div className="blob"></div>
                                 {vijesti.map((vijest) => (
-                                    <Grid.Column key={vijest.slug} width={6}>
-                                        <div className="vijest-list-card">
-                                            <Image
-                                                src={vijest.pictureUrl || '/assets/Vijest_Slike/News.jpg'}
-                                                style={{ height: '200px', objectFit: 'cover' }}
-                                            />
-                                            <h3 className="vijest-list-title">{vijest.title}</h3>
-                                            <span className="vijest-list-date">{formatDate(vijest.publishedDate)}</span>
-                                            <Icon name="eye" className="icon-list-views">
-                                                &nbsp;{vijest.views}
-                                            </Icon>
-                                            <div className="right-floated-author">
-                                                <Image className="avatar-list-author" src={getAuthorImage(vijest.author)} />
-                                                {vijest.author}
-                                            </div>
-                                            <Label
-                                                style={{ position: 'absolute', marginLeft: 15, marginTop: -12 }}
-                                                ribbon
-                                                color='blue'
-                                            >
-                                                {getCategoryIcon(vijest.category)} {vijest.category}
-                                            </Label>
+                                    <Grid.Column key={vijest.slug} width={5}>
+                                        <Link to={`/vijesti/${vijest.slug}`}>
+                                            <div className="vijest-list-card" style={{ minHeight: '250px' }}>
+                                                <Image className="vijest-slika"
+                                                    src={vijest.pictureUrl || '/assets/Vijest_Slike/News.jpg'}
+                                                    style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover' }}
+                                                />
+                                                <h3 className="vijest-list-title">{vijest.title}</h3>
+                                                <span className="vijest-list-date">{formatDate(vijest.publishedDate)}</span>
+                                                <Icon name="eye" className="icon-list-views">
+                                                    &nbsp;{vijest.views}
+                                                </Icon>
+                                                <div className="right-floated-author">
+                                                    <Image className="avatar-list-author" src={getAuthorImage(vijest.author)} />
+                                                    {vijest.author}
+                                                </div>
+                                                {/* <Label
+                                                    style={{ position: 'absolute', marginLeft: 30, marginTop: -12 }}
+                                                    ribbon
+                                                    color='blue'
+                                                >
+                                                    {getCategoryIcon(vijest.category)} {vijest.category}
+                                                </Label> */}
 
-                                            <div className="vijest-list-button">
-                                                <Button
-                                                    as={Link}
-                                                    to={`/vijesti/${vijest.slug ?? ''}`}
-                                                    className="citaj"
-                                                    floated="left"
-                                                    content="Čitaj"
-                                                    color="blue"
-                                                />
-                                                <Button
-                                                    className="izbrisi"
-                                                    name={vijest.slug}
-                                                    loading={loading && target === vijest.slug}
-                                                    floated="right"
-                                                    content="Izbriši"
-                                                    color="red"
-                                                    onClick={(e) => handleVijestDelete(e, vijest.slug ?? '')}
-                                                />
+                                                {/* <div className="vijest-list-button">
+                                                    <Button
+                                                        as={Link}
+                                                        to={`/vijesti/${vijest.slug ?? ''}`}
+                                                        className="citaj"
+                                                        floated="left"
+                                                        content="Čitaj"
+                                                        color="blue"
+                                                    />
+                                                    <Button
+                                                        className="izbrisi"
+                                                        name={vijest.slug}
+                                                        loading={loading && target === vijest.slug}
+                                                        floated="right"
+                                                        content="Izbriši"
+                                                        color="red"
+                                                        onClick={(e) => handleVijestDelete(e, vijest.slug ?? '')}
+                                                    />
+                                                </div> */}
                                             </div>
-                                        </div>
+                                        </Link>
                                     </Grid.Column>
                                 ))}
                             </Grid.Row>

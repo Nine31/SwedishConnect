@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Menu } from "semantic-ui-react";
+import { Button, Container, Dropdown, Menu } from "semantic-ui-react";
 import { 
     Home, Newspaper, CalendarDays, Briefcase, 
     Languages, Plane, Database,
@@ -56,9 +56,20 @@ export default function NavBar() {
                         <Menu.Item as={NavLink} to='/radna-prava' className="nav-item">
                             <Briefcase size={20} /> <span>Radna prava</span>
                         </Menu.Item>
-                        <Menu.Item as={NavLink} to='/svedski-jezik' className="nav-item">
+
+                        {/* Dropdown za Švedski jezik sa ikonicom */}
+                        <Dropdown item simple text="Svedski jezik" className="nav-item">
+                            <Dropdown.Menu>
+                                <Dropdown.Item as={NavLink} to="/kurs-a">Kurs A</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to="/kurs-b">Kurs B</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to="/kurs-c">Kurs C</Dropdown.Item>
+                                <Dropdown.Item as={NavLink} to="/kurs-d">Kurs D</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        {/* <Menu.Item as={NavLink} to='/svedski-jezik' className="nav-item">
                             <Languages size={20} /> <span>Švedski jezik</span>
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Item as={NavLink} to='/destinacije' className="nav-item">
                             <Plane size={20} /> <span>Destinacije</span>
                         </Menu.Item>
@@ -67,11 +78,11 @@ export default function NavBar() {
                         </Menu.Item>
                     </div>
 
-                    <div className="action-buttons">
+                    {/* <div className="action-buttons">
                         <Button as={NavLink} to='/kreiraj-vijest' positive>Kreiraj vijest</Button>
                         <Button primary>Kreiraj hutbu</Button>
                         <Button color='purple'>Kreiraj događaj</Button>
-                    </div>
+                    </div> */}
                 </Container>
             </Menu>
         </div>
