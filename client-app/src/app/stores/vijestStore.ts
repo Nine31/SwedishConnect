@@ -23,12 +23,22 @@ export default class VijestStore {
             grouped.get(vijest.category)?.push(vijest);
         });
 
-        return Array.from(grouped.entries());
+        // Lokalizovano sortiranje po abecedi (Bosanski, Hrvatski, Srpski)
+        return Array.from(grouped.entries()).sort((a, b) =>
+            a[0].localeCompare(b[0], 'bs', { sensitivity: 'base' })
+        );
+
+        // Sortiranje kategorija abecedno
+        // return Array.from(grouped.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+        // kategorije sortirane nasumicno
+        // return Array.from(grouped.entries());
     }
 
     get vijestiByDate() {
         return Array.from(this.vijestRegistry.values()).sort((a, b) => 
-            new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
+            b.publishedDate!.getTime() - a.publishedDate!.getTime()
+            // new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
         );
     }
 
@@ -121,7 +131,8 @@ export default class VijestStore {
     }
 
     private setVijest = (vijest: Vijest) => {
-        vijest.publishedDate = vijest.publishedDate.split('T') [0];
+        vijest.publishedDate = new Date(vijest.publishedDate!);
+        // vijest.publishedDate = vijest.publishedDate.split('T') [0];
         this.vijestRegistry.set(vijest.slug!, vijest);
     }
 

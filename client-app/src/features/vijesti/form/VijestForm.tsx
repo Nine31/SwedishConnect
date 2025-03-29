@@ -1,10 +1,12 @@
-import { Button, Checkbox, CheckboxProps, Form, Segment } from "semantic-ui-react";
+import { Button, Checkbox, CheckboxProps, Form, Grid, Segment } from "semantic-ui-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Vijest } from "../../../app/models/vijest";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default observer(function VijestForm() {
     const {vijestStore} = useStore();
@@ -19,7 +21,8 @@ export default observer(function VijestForm() {
         author: "",
         pictureUrl: "",
         category: "",
-        publishedDate: new Date().toISOString(),
+        publishedDate: null,
+        // publishedDate: new Date().toISOString(),
         views: 0,
         isFeatured: false,
         tags: []
@@ -113,13 +116,13 @@ export default observer(function VijestForm() {
     }
 
     return (
-        <Segment clearing className="okvir" >
-            <Form onSubmit={handleSubmit} autoComplete='off' >
-                <Form.Input placeholder='Naslov' value={vijest.title} name='title' onChange={handleInputChange} />
+        <Grid clearing className="vijest-form-okvir" >
+            <Form onSubmit={handleSubmit} autoComplete='off'>
+                <Form.Input placeholder='Naslov' value={vijest.title} name='title' onChange={handleInputChange} className="vijest-form-title"/>
 
-                <Form.Input placeholder='Napiši kratak sazetak...' value={vijest.summary} name='summary' onChange={handleInputChange} />
+                <Form.Input placeholder='Napiši kratak sazetak...' value={vijest.summary} name='summary' onChange={handleInputChange} className="vijest-form-summary" />
 
-                <Form.TextArea placeholder='Napiši vijest...' value={vijest.content} name='content' onChange={handleInputChange} style={{ whiteSpace: "pre-wrap" }}/>
+                <Form.TextArea placeholder='Napiši vijest...' value={vijest.content} name='content' onChange={handleInputChange} style={{ whiteSpace: "pre-wrap" }} className="vijest-form-content"/>
 
                 {/* Dugmad za dodavanje podnaslova i citata */}
                 <div style={{ marginBottom: "10px" }}>
@@ -127,28 +130,42 @@ export default observer(function VijestForm() {
                         type="button"
                         onClick={() => insertAtCursor("subtitle")} 
                         content="Dodaj Podnaslov"
+                        color="blue"
                     />
                     <Button
                         type="button"
                         onClick={() => insertAtCursor("quote")} 
                         content="Dodaj Citat"
+                        color="purple"
                     />
                 </div>
 
-                <Form.Input placeholder='Link slike' value={vijest.pictureUrl} name='pictureUrl' onChange={handleInputChange} />
+                <Form.Input placeholder='Link slike' value={vijest.pictureUrl} name='pictureUrl' onChange={handleInputChange} className="vijest-form-pictureUrl"/>
 
                 <Form.Group widths='equal'>
-                    <Form.Input placeholder='Autor' value={vijest.author} name='author' onChange={handleInputChange} />
-                    <Form.Input placeholder='Kategorija' value={vijest.category} name='category' onChange={handleInputChange} />
+                    <Form.Input placeholder='Autor' value={vijest.author} name='author' onChange={handleInputChange} className="vijest-form-author"/>
+                    <Form.Input placeholder='Kategorija' value={vijest.category} name='category' onChange={handleInputChange} className="vijest-form-category"/>
                 </Form.Group>
 
                 <Form.Group widths='equal'>
-                    <Form.Input type="date" placeholder='Datum' value={vijest.publishedDate} name='publishedDate' onChange={handleInputChange} />
+                    {/* <Form.Input type="date" placeholder='Datum' value={vijest.publishedDate} name='publishedDate' onChange={handleInputChange} /> */}
+                    <Form.Input>
+                        <DatePicker
+                            selected={vijest.publishedDate ? new Date(vijest.publishedDate) : null}
+                            onChange={(date) => setVijest({ ...vijest, publishedDate: date })}
+                            showTimeSelect
+                            timeFormat="HH:mm"
+                            timeIntervals={5}
+                            dateFormat="dd/MMM/yyyy HH:mm"
+                            className="date-picker-input"
+                        />
+                    </Form.Input>
                     <Form.Input 
                         placeholder='Tagovi (pritisni Enter ili zarez za dodavanje)' 
                         value={tagInput} 
                         onChange={handleTagInputChange} 
                         onKeyDown={handleTagKeyDown}
+                        className="vijest-form-tags"
                     />
                 </Form.Group>
 
@@ -173,13 +190,14 @@ export default observer(function VijestForm() {
                     <Checkbox 
                         label='Aktuelno' 
                         checked={vijest.isFeatured} 
-                        onChange={handleCheckboxChange} 
+                        onChange={handleCheckboxChange}
+                        className="vijest-form-isFeatured" 
                     />
                 </Form.Field>
 
                 <Button loading={loading} className="potvrdi" floated='right' positive type='submit' content='Potvrdi' />
                 <Button as={Link} to={`/vijesti/${vijest.slug ?? ''}`} className="otkazi" floated='right' type='button' content='Otkaži' />
             </Form>
-        </Segment>
+        </Grid>
     )
 })

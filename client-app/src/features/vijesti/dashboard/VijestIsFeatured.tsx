@@ -2,6 +2,7 @@ import { Header, Image, List } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 const IstaknuteVijesti = observer(() => {
     const { vijestStore } = useStore();
@@ -10,7 +11,10 @@ const IstaknuteVijesti = observer(() => {
     // Filtriramo istaknute vijesti
     const istaknuteVijesti = vijestiByDate
         .filter(vijest => vijest.isFeatured)
-        .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+        .sort((a, b) => 
+            a.publishedDate!.getTime() - b.publishedDate!.getTime()
+        );
+        // .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
 
     return (
         <div>
@@ -36,7 +40,7 @@ const IstaknuteVijesti = observer(() => {
                                         </Link>
                                     </List.Header>
                                     <List.Description className="istaknute-vijesti-datum">
-                                        {vijest.publishedDate}
+                                        {format(vijest.publishedDate!, 'dd MMM yyy')}
                                     </List.Description>
                                 </List.Content>
                             </List.Item>

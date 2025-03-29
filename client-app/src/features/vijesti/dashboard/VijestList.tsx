@@ -1,8 +1,9 @@
-import { Button, Divider, Grid, Header, Icon, Image, Label} from "semantic-ui-react";
+import { Button, Grid, Header, Icon, Image, Label} from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
+import {format} from 'date-fns';
 
 export default observer(function VijestList() {
     const {vijestStore} = useStore();
@@ -38,16 +39,15 @@ export default observer(function VijestList() {
         Nepoznat: "/assets/Avatar/Nepoznat.webp"
     };
 
-    // Funkcija za dobijanje slike autora
     const getAuthorImage = (author: string): string => {
         return authorImages[author] || "/assets/Avatar/user.png";
     };
 
-    const formatDate = (dateString: string) => {
-        const vijestDate = new Date(dateString);
+    const formatDate = (date: Date) => {
         const today = new Date();
     
         // Normalizacija na početak dana (ignorisanje sati, minuta i sekundi)
+        const vijestDate = new Date(date);
         vijestDate.setHours(0, 0, 0, 0);
         today.setHours(0, 0, 0, 0);
     
@@ -61,9 +61,9 @@ export default observer(function VijestList() {
         } else if (diffDays <= 5) {
             return `Kreirano prije ${diffDays} dana`;
         } else {
-            return vijestDate.toISOString().split('T')[0];
+            return format(vijestDate, 'dd MMM yyyy h:mm');
         }
-    };    
+    };   
 
     return (
         <>
@@ -85,7 +85,7 @@ export default observer(function VijestList() {
                                                     style={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover' }}
                                                 />
                                                 <h3 className="vijest-list-title">{vijest.title}</h3>
-                                                <span className="vijest-list-date">{formatDate(vijest.publishedDate)}</span>
+                                                <span className="vijest-list-date">{formatDate(new Date(vijest.publishedDate!))}</span>
                                                 <Icon name="eye" className="icon-list-views">
                                                     &nbsp;{vijest.views}
                                                 </Icon>

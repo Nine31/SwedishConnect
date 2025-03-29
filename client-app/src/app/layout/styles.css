@@ -148,8 +148,8 @@
 /* Tablets (481px to 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .logo {
-      width: 112px;
-      height: 112px;
+      width: 113px;
+      height: 113px;
   }
 
   .mobile-menu-button {
@@ -219,8 +219,8 @@
   }
 }
 
-/* Large Laptops and Desktops (1025px to 1200px) */
-@media (min-width: 1025px) and (max-width: 1200px) {
+/* Large Laptops and Desktops (1025px to 1300px) */
+@media (min-width: 1025px) and (max-width: 1300px) {
   .nav-item {
       padding: 1rem 0.75rem !important;
   }
@@ -238,8 +238,8 @@
   }
 }
 
-/* Extra Large Screens (above 1200px) */
-@media (min-width: 1201px) {
+/* Extra Large Screens (above 1300px) */
+@media (min-width: 1301px) {
   .container {
       max-width: 1400px !important;
       margin: 0 auto !important;
@@ -497,9 +497,9 @@
 }
 
 .icon-list-views {
-  font-size: 12px !important;
+  font-size: 13px !important;
   color: #777777;
-  padding-top: 12px;
+  padding-top: 13px;
 }
 
 .right-floated-author {
@@ -531,7 +531,7 @@
 .istaknute-vijesti-naslov {
   font-family: monospace !important;
   color: #000 !important;
-  font-size: 12px !important;
+  font-size: 13px !important;
   font-weight: 600 !important;
 }
 
@@ -1135,3 +1135,83 @@ summary:after {
 }
 
 /* ------------------------------------------------------------------------------*/
+
+/* VijestForm.tsx */
+
+.vijest-form-okvir {
+  /* margin-top: 50px !important; */
+  /* margin-left: 180px !important; */
+  top: calc(100% - 250px - (1.2em * var(--title-lines, 1)));
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  z-index: 2;
+  box-shadow: -7px -7px 7px -7px #005293, 7px -2px 7px -7px #FECC00;
+  position: absolute;
+  width: calc(100% - 2rem);
+  max-width: 760px;
+  margin: 0 auto;
+  background: #fff;
+  padding-top: 10px !important;
+}
+
+.vijest-form-title {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.vijest-form-summary {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.vijest-form-content {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.vijest-form-pictureUrl {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.vijest-form-author {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.vijest-form-category {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.date-picker-input {
+  font-family: monospace !important;
+  font-size: 13px !important;
+  width: 543px !important;
+}
+
+.vijest-form-tags {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+}
+
+.vijest-form-isFeatured {
+  font-family: monospace !important;
+  font-size: 13px;
+}
+
+.potvrdi {
+  margin-bottom: 20px !important;
+  color: #fff;
+}
+
+.otkazi {
+  background-color: #b30202 !important;
+  color: #fff !important;
+}
+
+/* -------------------------------------------------------------------- */
+
+

@@ -7,7 +7,7 @@ export interface Vijest {
     author: string
     pictureUrl: string
     category: string
-    publishedDate: string
+    publishedDate: Date | null
     views: number
     isFeatured: boolean
     tags: string[]

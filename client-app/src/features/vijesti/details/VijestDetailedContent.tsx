@@ -4,6 +4,8 @@ import { Button, Divider, Icon, Image } from "semantic-ui-react";
 import { Vijest } from "../../../app/models/vijest";
 import { useEffect, useState } from "react";
 import VijestDetailedComment from "./VijestDetailedComment";
+import { format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
     vijest: Vijest
@@ -58,7 +60,7 @@ export default observer(function VijestDetailedContent({vijest}: Props) {
 
                 <div className="drybn-blog__content">
                     <div className="blog-header">
-                        <p className="vijest-details-datum">{vijest.publishedDate}</p>
+                        <p className="vijest-details-datum">{format(vijest.publishedDate!, 'dd MMM yyy h:mm')}</p>
                         <h2 className="vijest-details-naslov">{vijest.title}</h2>
                         <p className="vijest-details-author">
                             <Image className="avatar-list-author" src={getAuthorImage(vijest.author)} />Autor:
