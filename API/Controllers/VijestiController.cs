@@ -1,11 +1,13 @@
 using Application.Vijesti;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     public class VijestiController : BaseAPIController
     {
+        [AllowAnonymous]
         [HttpGet] //api/vijesti
         public async Task<ActionResult<List<Vijest>>> GetVijesti()
         {

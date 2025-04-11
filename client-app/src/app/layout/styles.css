@@ -1214,4 +1214,74 @@ summary:after {
 
 /* -------------------------------------------------------------------- */
 
+/* Home page */
 
+.masthead {
+  display: flex;
+  background-image: linear-gradient(
+          135deg,
+          #020024 0%,
+          #005293 39%,
+          #FECC00 89%
+  ) !important;
+  height: 100vh;
+}
+
+.masthead .ui.menu .ui.button,
+.ui.menu a.ui.inverted.button {
+  margin-left: 0.5em;
+}
+
+.masthead h1.ui.header {
+  font-size: 4em;
+  font-weight: normal;
+}
+
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
+}
+
+/* --------------------------------------------------------------------- */
+
+/* Login Form page */
+
+.ui form {
+  margin-top: 20px;
+  font-family: monospace !important;
+  font-size: 14px !important;
+  color: #000;
+}
+
+.header-modal-login {
+  font-family: monospace !important;
+  font-size: 19px !important;
+  color: #005293 !important;
+}
+
+::placeholder {
+  font-family: monospace !important;
+  font-size: 15px;
+}
+
+.button-modal-login {
+  font-family: monospace !important;
+  background-color: #005293 !important;
+}
+/* ---------------------------------------------------------------------- */
+
+/* Register Form page */
+
+.header-modal-register {
+  font-family: monospace !important;
+  font-size: 16px !important;
+  color: #005293 !important;
+}
+
+.button-modal-register {
+  font-family: monospace !important;
+  background-color: #FECC00 !important;
+  color: #000 !important;
+}
+
+/* ------------------------------------------------------------------------ */

@@ -22,7 +22,7 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("prijava")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -40,17 +40,19 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost("registracija")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Korisničko ime je već zauzeto.");
+                ModelState.AddModelError("username", "Korisničko ime je već zauzeto");
+                return ValidationProblem();
             }
 
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("E-mail je već zauzet.");
+                ModelState.AddModelError("email", "E-mail je već zauzet");
+                return ValidationProblem();
             }
 
             var user = new AppUser

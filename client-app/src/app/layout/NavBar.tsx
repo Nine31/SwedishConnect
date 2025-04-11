@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Dropdown, Menu } from "semantic-ui-react";
+import { Button, Container, Dropdown, Menu, MenuItem, Image } from "semantic-ui-react";
 import { 
     Home, Newspaper, CalendarDays, Briefcase, 
     Languages, Plane, Database,
     AlignJustify,
     X
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useStore } from "../stores/store";
+import { observer } from "mobx-react-lite";
 
-export default function NavBar() {
+export default observer(function NavBar() {
     const [isSticky, setIsSticky] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const {userStore: {user, logout}} = useStore();
 
     const handleScroll = () => {
         setIsSticky(window.scrollY > 180);
@@ -76,6 +79,17 @@ export default function NavBar() {
                         <Menu.Item as={NavLink} to='/resursi' className="nav-item">
                             <Database size={20} /> <span>Resursi</span>
                         </Menu.Item>
+
+                        <MenuItem position='right'>
+                            <Image src={user?.image || '/assets/Avatar/user2.png'} avatar spaced='right' />
+                            <Dropdown pointing='top left' text={user?.displayName}>
+                                <Dropdown.Menu>
+                                <Dropdown.Item as={Link} to={`/profil/${user?.username}`} 
+                                        text='Moj profil' icon='user' />
+                                <Dropdown.Item onClick={logout} text='Odjavi se' icon='power' />
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </MenuItem>
                     </div>
 
                     {/* <div className="action-buttons">
@@ -87,4 +101,4 @@ export default function NavBar() {
             </Menu>
         </div>
     );
-}
+})
