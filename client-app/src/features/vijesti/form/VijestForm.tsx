@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxProps, Form, Grid, Segment } from "semantic-ui-react";
+import { Button, Checkbox, CheckboxProps, Form, Grid} from "semantic-ui-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";

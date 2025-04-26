@@ -9,6 +9,103 @@ namespace Persistence
         {
             await SeedUsers(context, userManager);
             await SeedVijesti(context);
+            await SeedCourses(context);
+        }
+
+        private static async Task SeedCourses(DataContext context)
+        {
+            if (context.Courses.Any()) return;
+
+            var course = new Course
+            {
+                Title = "Osnove švedskog jezika",
+                Description = "Naučite osnove švedskog jezika kroz interaktivne module.",
+                IsLocked = false,
+                Modules = new List<CourseModule>
+                {
+                    new CourseModule
+                    {
+                        Title = "Abeceda",
+                        Description = "Švedska abeceda sa slikama i zvukovima.",
+                        LessonItems = new List<LessonItem>
+                        {
+                            new LessonItem
+                            {
+                                SwedishText = "A",
+                                EnglishTranslation = "A",
+                                BosnianTranslation = "A",
+                                ImageUrl = "https://example.com/slika-a.jpg",
+                                AudioUrl = "https://example.com/audio-a.mp3",
+                                ExampleSentence = "A kao Anka"
+                            },
+                            new LessonItem
+                            {
+                                SwedishText = "B",
+                                EnglishTranslation = "B",
+                                BosnianTranslation = "B",
+                                ImageUrl = "https://example.com/slika-b.jpg",
+                                AudioUrl = "https://example.com/audio-b.mp3",
+                                ExampleSentence = "B kao Banan"
+                            }
+                        }
+                    },
+                    new CourseModule
+                    {
+                        Title = "Brojevi",
+                        Description = "Učenje brojeva kroz kviz vježbe.",
+                        LessonItems = new List<LessonItem>
+                        {
+                            new LessonItem
+                            {
+                                SwedishText = "Ett",
+                                EnglishTranslation = "One",
+                                BosnianTranslation = "Jedan",
+                                ExampleSentence = "Jag har ett äpple.",
+                                Exercises = new List<Exercise>
+                                {
+                                    new Exercise
+                                    {
+                                        Question = "Šta znači 'ett'?",
+                                        Answer = "Jedan",
+                                        Points = 10,
+                                        AnswerOptions = new List<AnswerOption>
+                                        {
+                                            new AnswerOption { Text = "Jedan", IsCorrect = true },
+                                            new AnswerOption { Text = "Dva", IsCorrect = false },
+                                            new AnswerOption { Text = "Tri", IsCorrect = false }
+                                        }
+                                    }
+                                }
+                            },
+                            new LessonItem
+                            {
+                                SwedishText = "Två",
+                                EnglishTranslation = "Two",
+                                BosnianTranslation = "Dva",
+                                ExampleSentence = "Jag har två hundar.",
+                                Exercises = new List<Exercise>
+                                {
+                                    new Exercise
+                                    {
+                                        Question = "Šta znači 'två'?",
+                                        Answer = "Dva",
+                                        Points = 10,
+                                        AnswerOptions = new List<AnswerOption>
+                                        {
+                                            new AnswerOption { Text = "Jedan", IsCorrect = false },
+                                            new AnswerOption { Text = "Tri", IsCorrect = false },
+                                            new AnswerOption { Text = "Dva", IsCorrect = true }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            await context.Courses.AddAsync(course);
+            await context.SaveChangesAsync();
         }
 
         public static async Task SeedUsers(DataContext context, UserManager<AppUser> userManager)
